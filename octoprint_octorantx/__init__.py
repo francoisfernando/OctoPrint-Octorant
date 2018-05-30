@@ -13,7 +13,7 @@ import subprocess
 import os
 
 
-class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
+class OctorantPluginX(octoprint.plugin.EventHandlerPlugin,
 					 octoprint.plugin.StartupPlugin,
 					 octoprint.plugin.SettingsPlugin,
                      octoprint.plugin.AssetPlugin,
@@ -341,7 +341,7 @@ __plugin_name__ = "OctoRantX"
 
 def __plugin_load__():
 	global __plugin_implementation__
-	__plugin_implementation__ = OctorantPlugin()
+	__plugin_implementation__ = OctorantPluginX()
 
 	global __plugin_hooks__
 	__plugin_hooks__ = {
