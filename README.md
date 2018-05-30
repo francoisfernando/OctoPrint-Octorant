@@ -20,7 +20,7 @@ See [the release history](https://github.com/bchanudet/OctoPrint-Octorant/releas
 Install via the bundled [Plugin Manager](https://github.com/foosel/OctoPrint/wiki/Plugin:-Plugin-Manager)
 or manually using this URL:
 
-    https://github.com/bchanudet/OctoPrint-Octorant/archive/master.zip
+    https://github.com/francoisfernando/OctoPrint-Octorant/archive/master.zip
 
 ### Create the WebHook in Discord
 
