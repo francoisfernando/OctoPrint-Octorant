@@ -154,17 +154,17 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 		# for details.
 		return dict(
 			octorant=dict(
-				displayName="Octorant Plugin",
+				displayName="OctorantX Plugin",
 				displayVersion=self._plugin_version,
 
 				# version check: github repository
 				type="github_release",
-				user="bchanudet",
+				user="francoisfernando",
 				repo="OctoPrint-Octorant",
 				current=self._plugin_version,
 
 				# update method: pip
-				pip="https://github.com/bchanudet/OctoPrint-Octorant/archive/{target_version}.zip"
+				pip="https://github.com/francoisfernando/OctoPrint-Octorant/archive/{target_version}.zip"
 			)
 		)
 
