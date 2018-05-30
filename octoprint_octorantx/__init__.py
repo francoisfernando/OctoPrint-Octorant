@@ -103,7 +103,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 				"message" : "Hello hello! If you see this message, it means that the settings are correct!"
 			},
 		}
-		
+
 	def on_after_startup(self):
 		self._logger.info("Octorant is started !")
 
@@ -171,13 +171,13 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 	##~~ EventHandlerPlugin hook
 
 	def on_event(self, event, payload):
-		
+
 		if event == "Startup":
 			return self.notify_event("startup")
-		
+
 		if event == "Shutdown":
 			return self.notify_event("shutdown")
-		
+
 		if event == "PrinterStateChanged":
 			if payload["state_id"] == "OPERATIONAL":
 				return self.notify_event("printer_state_operational")
@@ -185,9 +185,9 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 				return self.notify_event("printer_state_error")
 			elif payload["state_id"] == "UNKNOWN":
 				return self.notify_event("printer_state_unknown")
-		
+
 		if event == "PrintStarted":
-			return self.notify_event("printing_started",payload)	
+			return self.notify_event("printing_started",payload)
 		if event == "PrintPaused":
 			return self.notify_event("printing_paused",payload)
 		if event == "PrintResumed":
@@ -198,7 +198,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 		if event == "PrintDone":
 			payload['time_formatted'] = str(timedelta(seconds=int(payload["time"])))
 			return self.notify_event("printing_done", payload)
-	
+
 		return True
 
 	def on_print_progress(self,location,path,progress):
@@ -216,7 +216,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 			self._settings.get(['avatar'],merged=True),\
 			self._settings.get(['username'],merged=True)\
 		)
-	
+
 		if(old_bot_settings != new_bot_settings):
 			self._logger.info("Settings have changed. Send a test message...")
 			self.notify_event("test")
@@ -226,9 +226,9 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 		if(eventID not in self.events):
 			self._logger.error("Tried to notifiy on inexistant eventID : ", eventID)
 			return False
-		
+
 		tmpConfig = self._settings.get(["events", eventID],merged=True)
-		
+
 		if tmpConfig["enabled"] != True:
 			self._logger.debug("Event {} is not enabled. Returning gracefully".format(eventID))
 			return False
@@ -238,7 +238,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 			int(data["progress"]) == 0 \
 			or int(data["progress"]) % int(tmpConfig["step"]) != 0 \
 		) :
-			return False			
+			return False
 
 		return self.send_message(eventID, tmpConfig["message"].format(**data), tmpConfig["with_snapshot"])
 
@@ -253,10 +253,10 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 		script_to_exec = None
 		if which == "before":
 			script_to_exec = self._settings.get(["script_before"], merged=True)
-		
+
 		elif which == "after":
 			script_to_exec = self._settings.get(["script_after"], merged=True)
-		
+
 		# Finally exec the script
 		out = ""
 		self._logger.info("{}:{} File to start: '{}'".format(eventName, which, script_to_exec))
@@ -279,7 +279,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 
 		# exec "before" script if any
 		self.exec_script(eventID, "before")
-		
+
 		# Get snapshot if asked for
 		snapshot = None
 		snapshotUrl = self._settings.global_get(["webcam","snapshot"])
@@ -293,17 +293,17 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 
 			# Only do something if we got the snapshot
 			if snapshotCall :
-				snapshotImage = BytesIO(snapshotCall.content)				
+				snapshotImage = BytesIO(snapshotCall.content)
 
 				# Only call Pillow if we need to transpose anything
-				if (mustFlipH or mustFlipV or mustRotate): 
+				if (mustFlipH or mustFlipV or mustRotate):
 					img = Image.open(snapshotImage)
 
 					self._logger.info("Transformations : FlipH={}, FlipV={} Rotate={}".format(mustFlipH, mustFlipV, mustRotate))
 
 					if mustFlipH:
 						img = img.transpose(Image.FLIP_LEFT_RIGHT)
-					
+
 					if mustFlipV:
 						img = img.transpose(Image.FLIP_TOP_BOTTOM)
 
@@ -311,9 +311,9 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 						img = img.transpose(Image.ROTATE_90)
 
 					newImage = BytesIO()
-					img.save(newImage,'png')			
+					img.save(newImage,'png')
 
-					snapshotImage = newImage	
+					snapshotImage = newImage
 
 
 				snapshot = {'file': ("snapshot.png", snapshotImage.getvalue())}
@@ -325,7 +325,7 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 			self._settings.get(["username"],merged=True),
 			self._settings.get(['avatar'],merged=True),
 			snapshot
-		)		
+		)
 
 		out = discordCall.post()
 
@@ -333,11 +333,11 @@ class OctorantPlugin(octoprint.plugin.EventHandlerPlugin,
 		self.exec_script(eventID, "after")
 
 		return out
-		
+
 # If you want your plugin to be registered within OctoPrint under a different name than what you defined in setup.py
 # ("OctoPrint-PluginSkeleton"), you may define that here. Same goes for the other metadata derived from setup.py that
 # can be overwritten via __plugin_xyz__ control properties. See the documentation for that.
-__plugin_name__ = "OctoRant"
+__plugin_name__ = "OctoRantX"
 
 def __plugin_load__():
 	global __plugin_implementation__
