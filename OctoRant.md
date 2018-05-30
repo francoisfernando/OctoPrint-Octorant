@@ -1,8 +1,8 @@
 ---
 layout: plugin
 
-id: octorant
-title: OctoPrint-Octorant
+id: octorantx
+title: OctoPrint-OctorantX
 description: Discord plugin for OctoPrint
 author: Benjamin Chanudet
 license: MIT
